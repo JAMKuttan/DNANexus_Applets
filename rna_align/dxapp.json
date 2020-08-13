@@ -1,0 +1,116 @@
+{
+  "name": "rnaalign",
+  "title": "RNASeq Alignment",
+  "summary": "Creates a BAM file from RNASeq data",
+  "dxapi": "1.0.0",
+  "version": "1.0.0",
+  "inputSpec": [
+    {
+	"name": "fq1",
+	"label": "Fastq1",
+	"class": "file",
+	"optional": false,
+	"patterns": [
+            "*.fastq.gz","*.fq.gz"
+	],
+	"help": ""
+    },
+    {
+      "name": "fq2",
+      "label": "Fastq2",
+      "class": "file",
+      "optional": false,
+	"patterns": [
+            "*.fastq.gz","*.fq.gz"
+	],
+      "help": ""
+    },
+    {
+      "name": "reference",
+      "label": "Reference Files (tar.gz)",
+      "class": "file",
+      "optional": false,
+	"patterns": [
+            "*.tar.gz"
+	],
+      "help": ""
+    },
+    {
+      "name": "sampleid",
+      "label": "ReadGroup/SampleID",
+      "class": "string",
+      "optional": false,
+      "help": ""
+    },
+    {
+      "name": "umi",
+      "label": "UMI in ReadName",
+      "class": "boolean",
+	"optional": false,
+	"default": true,
+      "help": ""
+    },
+    {
+      "name": "aligner",
+      "label": "Aligner to be used",
+      "class": "string",
+      "optional": false,
+      "default": "hisat",
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "bam",
+      "label": "BAM file",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "bai",
+      "label": "BAM Index file",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "alignstats",
+      "label": "rnaseq alignment summary stats file",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 2
+      }
+    },
+    "interpreter": "bash",
+    "release": "16.04",
+    "distribution": "Ubuntu",
+    "file": "src/rnaalign.sh"
+  },
+  "access": {
+    "network": [
+      "*"
+    ]
+  },
+  "regionalOptions": {
+    "aws:us-east-1": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_x8"
+        }
+      }
+    }
+  }
+}

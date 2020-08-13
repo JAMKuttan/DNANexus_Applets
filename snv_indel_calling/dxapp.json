@@ -1,0 +1,109 @@
+{
+  "name": "snv_indel_calling",
+  "title": "Variant Calling (SNVs and InDels)",
+  "summary": "This applet contains variant calling methods for tumor only and somatic workflows. Including Platypus, Freebayes, Strelka2, Mutect2, and Shimmer",
+  "dxapi": "1.0.0",
+  "version": "1.0.0",
+  "inputSpec": [
+    {
+      "name": "tbam",
+      "label": "Tumor BAM (.bam)",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "nbam",
+      "label": "Normal BAM (.bam)",
+      "class": "file",
+      "optional": true,
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference",
+      "label": "Reference Files (tar.gz)",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.tar.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "panel",
+      "label": "Panel Files (tar.gz)",
+      "class": "file",
+      "optional": true,
+      "patterns": [
+        "*.tar.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "caseid",
+      "label": "SubjectID/CaseID",
+      "class": "string",
+      "optional": false,
+      "help": ""
+    },
+    {
+      "name": "algo",
+      "label": "Variant Calling Algorithm (mutect fb platypus strelka2 shimmer)",
+	"class": "string",
+	"default":"fb strelka2 platypus",
+      "optional": false,
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "vcf",
+      "label": "VCF File Output",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "ori",
+      "label": "Original VCF File Output",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 8
+      }
+    },
+    "interpreter": "bash",
+    "release": "16.04",
+    "distribution": "Ubuntu",
+    "file": "src/snv_indel_calling.sh"
+  },
+  "access": {
+    "network": [
+      "*"
+    ]
+  },
+  "regionalOptions": {
+    "aws:us-east-1": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_v2_x16"
+        }
+      }
+    }
+  }
+}

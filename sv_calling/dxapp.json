@@ -1,0 +1,131 @@
+{
+  "name": "sv_calling",
+  "title": "Structural Variants Calling",
+  "summary": "This applet contains variant calling methods for tumor only and somatic workflows. Including pindel, delly, svaba, cnvkit and itdseek",
+  "dxapi": "1.0.0",
+  "version": "1.0.0",
+  "inputSpec": [
+   {
+      "name": "tbam",
+      "label": "Tumor BAM (.bam)",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+   {
+      "name": "nbam",
+      "label": "Normal BAM (.bam)",
+      "class": "file",
+      "optional": true,
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference",
+      "label": "Reference Files (tar.gz)",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.tar.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "panel",
+      "label": "Panel Files (tar.gz)",
+      "class": "file",
+      "optional": true,
+      "patterns": [
+        "*.tar.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "caseid",
+      "label": "SubjectID/CaseID",
+      "class": "string",
+      "optional": false,
+      "help": ""
+    },
+    {
+	"name": "algo",
+	"label": "Variant Calling Algorithm (pindel delly svaba cnvkit itdseek)",
+	"class": "string",
+	"optional": false,
+	"default":"pindel_itd delly svaba cnvkit itdseek",
+	"help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "vcf",
+      "label": "VCF File Output",
+      "class": "file",
+      "optional": true,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "cnvout",
+	"label": "CNVKit Output Files",
+	"class": "file",
+      "optional": true,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "genefusion",
+      "label": "DNA Genefusion File Output",
+      "class": "file",
+      "optional": true,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "svvcf",
+      "label": "Structural Variant VCF File Output",
+      "class": "file",
+      "optional": true,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    }
+   ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 4
+      }
+    },
+    "interpreter": "bash",
+    "release": "16.04",
+    "distribution": "Ubuntu",
+    "file": "src/sv_calling.sh"
+  },
+  "access": {
+    "network": [
+      "*"
+    ]
+  },
+  "regionalOptions": {
+    "aws:us-east-1": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_v2_x16"
+        }
+      }
+    }
+  }
+}

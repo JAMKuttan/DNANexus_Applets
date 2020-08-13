@@ -1,7 +1,7 @@
 {
-  "name": "trim_galore",
-  "title": "Trim Galore",
-  "summary": "Trim Galore: Trims poor quality sequence from reads",
+  "name": "dna_align",
+  "title": "DNA Alignment",
+  "summary": "Create a Sorted BAM using BWA and Samtools",
   "dxapi": "1.0.0",
   "version": "1.0.0",
   "inputSpec": [
@@ -13,7 +13,7 @@
       "patterns": [
           "*.fastq.gz","*.fq.gz"
       ],
-      "help": ""
+      "help": "R1"
     },
     {
       "name": "fq2",
@@ -23,11 +23,39 @@
       "patterns": [
         "*.fastq.gz","*.fq.gz"
       ],
+      "help": "R2"
+    },
+    {
+      "name": "humanref",
+      "label": "BWA Index Files for Human Genome (tar.gz)",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.tar.gz"
+      ],
+      "help": "tar gz file of BWA index files for Human Genome"
+    },
+    {
+      "name": "virusref",
+      "label": "BWA Index Files for Virus Genomes (tar.gz)",
+      "class": "file",
+      "optional": true,
+      "patterns": [
+        "*.tar.gz"
+      ],
+      "help": "tar gz file of BWA index files for Viral Genome"
+    },
+    {
+      "name": "umi",
+      "label": "UMI in ReadName",
+      "class": "boolean",
+	"optional": true,
+	"default": true,
       "help": ""
     },
     {
       "name": "sampleid",
-      "label": "Output Files Prefix",
+      "label": "ReadGroup/SampleID",
       "class": "string",
       "optional": false,
       "help": ""
@@ -35,8 +63,8 @@
   ],
   "outputSpec": [
     {
-      "name": "trim1",
-      "label": "Trim Fq1",
+      "name": "bam",
+      "label": "Sorted Bam",
       "class": "file",
       "patterns": [
         "*"
@@ -44,8 +72,8 @@
       "help": ""
     },
     {
-      "name": "trim2",
-      "label": "Trim Fq2",
+      "name": "bai",
+      "label": "BAM index",
       "class": "file",
       "patterns": [
         "*"
@@ -53,8 +81,8 @@
       "help": ""
     },
     {
-      "name": "trimreport",
-      "label": "Trim Output Report",
+      "name": "vseqstat",
+      "label": "Virus Sequence Stats",
       "class": "file",
       "patterns": [
         "*"
@@ -63,15 +91,15 @@
     }
   ],
   "runSpec": {
-    "timeoutPolicy": {
+      "timeoutPolicy": {
       "*": {
-        "hours": 2
+        "hours": 4
       }
     },
     "interpreter": "bash",
     "release": "16.04",
     "distribution": "Ubuntu",
-    "file": "src/trim_galore.sh"
+    "file": "src/dna_align.sh"
   },
   "access": {
     "network": [
@@ -82,7 +110,7 @@
     "aws:us-east-1": {
       "systemRequirements": {
         "*": {
-          "instanceType": "mem1_ssd1_x2"
+          "instanceType": "mem1_ssd1_v2_x16"
         }
       }
     }

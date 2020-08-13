@@ -1,33 +1,30 @@
 {
-  "name": "trim_galore",
-  "title": "Trim Galore",
-  "summary": "Trim Galore: Trims poor quality sequence from reads",
+  "name": "rna_bamqc",
+  "title": "RNASeq Alignment QC",
+  "summary": "RNASeq Alignment QC, alignment stats and fastqc",
   "dxapi": "1.0.0",
   "version": "1.0.0",
   "inputSpec": [
     {
-      "name": "fq1",
-      "label": "Fastq1",
+      "name": "bam",
+      "label": "Aligned BAM from rnaalign step (aligned.bam)",
       "class": "file",
       "optional": false,
       "patterns": [
-          "*.fastq.gz","*.fq.gz"
+        "*.bam"
       ],
       "help": ""
     },
     {
-      "name": "fq2",
-      "label": "Fastq2",
+      "name": "alignstats",
+      "label": "Alignment Statistics",
       "class": "file",
       "optional": false,
-      "patterns": [
-        "*.fastq.gz","*.fq.gz"
-      ],
       "help": ""
     },
     {
       "name": "sampleid",
-      "label": "Output Files Prefix",
+      "label": "ReadGroup/SampleName",
       "class": "string",
       "optional": false,
       "help": ""
@@ -35,8 +32,8 @@
   ],
   "outputSpec": [
     {
-      "name": "trim1",
-      "label": "Trim Fq1",
+      "name": "fastqczip",
+      "label": "FastQC output file (zip)",
       "class": "file",
       "patterns": [
         "*"
@@ -44,8 +41,8 @@
       "help": ""
     },
     {
-      "name": "trim2",
-      "label": "Trim Fq2",
+      "name": "fastqchtml",
+      "label": "FastQC output file (html)",
       "class": "file",
       "patterns": [
         "*"
@@ -53,8 +50,8 @@
       "help": ""
     },
     {
-      "name": "trimreport",
-      "label": "Trim Output Report",
+      "name": "seqstats",
+      "label": "Sequence Statistics output file",
       "class": "file",
       "patterns": [
         "*"
@@ -65,13 +62,13 @@
   "runSpec": {
     "timeoutPolicy": {
       "*": {
-        "hours": 2
+        "hours": 1
       }
     },
     "interpreter": "bash",
     "release": "16.04",
     "distribution": "Ubuntu",
-    "file": "src/trim_galore.sh"
+    "file": "src/rna_bamqc.sh"
   },
   "access": {
     "network": [
@@ -82,7 +79,7 @@
     "aws:us-east-1": {
       "systemRequirements": {
         "*": {
-          "instanceType": "mem1_ssd1_x2"
+          "instanceType": "mem1_ssd1_v2_x2"
         }
       }
     }

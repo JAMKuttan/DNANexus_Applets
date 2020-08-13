@@ -1,33 +1,43 @@
 {
-  "name": "trim_galore",
-  "title": "Trim Galore",
-  "summary": "Trim Galore: Trims poor quality sequence from reads",
+  "name": "gatkbam",
+  "title": "GATK BQSR",
+  "summary": "This applet contains GATK and runs BQSR for BAM files for samples analyzed downstream by GATK",
   "dxapi": "1.0.0",
   "version": "1.0.0",
   "inputSpec": [
-    {
-      "name": "fq1",
-      "label": "Fastq1",
+   {
+      "name": "bam",
+      "label": "Sorted BAM (.bam)",
       "class": "file",
       "optional": false,
       "patterns": [
-          "*.fastq.gz","*.fq.gz"
+        "*.bam"
+      ],
+      "help": ""
+    },
+   {
+      "name": "bai",
+      "label": "BAM Index (.bai)",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bai"
       ],
       "help": ""
     },
     {
-      "name": "fq2",
-      "label": "Fastq2",
+      "name": "reference",
+      "label": "Reference Files (tar.gz)",
       "class": "file",
       "optional": false,
       "patterns": [
-        "*.fastq.gz","*.fq.gz"
+        "*.tar.gz"
       ],
       "help": ""
     },
-    {
+   {
       "name": "sampleid",
-      "label": "Output Files Prefix",
+      "label": "ReadGroup/SampleID",
       "class": "string",
       "optional": false,
       "help": ""
@@ -35,8 +45,8 @@
   ],
   "outputSpec": [
     {
-      "name": "trim1",
-      "label": "Trim Fq1",
+      "name": "gatkbam",
+      "label": "GATK Bam",
       "class": "file",
       "patterns": [
         "*"
@@ -44,17 +54,8 @@
       "help": ""
     },
     {
-      "name": "trim2",
-      "label": "Trim Fq2",
-      "class": "file",
-      "patterns": [
-        "*"
-      ],
-      "help": ""
-    },
-    {
-      "name": "trimreport",
-      "label": "Trim Output Report",
+      "name": "gatkbai",
+      "label": "GATK BAM index",
       "class": "file",
       "patterns": [
         "*"
@@ -65,13 +66,13 @@
   "runSpec": {
     "timeoutPolicy": {
       "*": {
-        "hours": 2
+        "hours": 8
       }
     },
     "interpreter": "bash",
     "release": "16.04",
     "distribution": "Ubuntu",
-    "file": "src/trim_galore.sh"
+    "file": "src/gatkbam.sh"
   },
   "access": {
     "network": [
@@ -82,7 +83,7 @@
     "aws:us-east-1": {
       "systemRequirements": {
         "*": {
-          "instanceType": "mem1_ssd1_x2"
+          "instanceType": "mem3_hdd2_x2"
         }
       }
     }

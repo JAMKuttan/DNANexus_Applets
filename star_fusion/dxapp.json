@@ -1,7 +1,7 @@
 {
-  "name": "trim_galore",
-  "title": "Trim Galore",
-  "summary": "Trim Galore: Trims poor quality sequence from reads",
+  "name": "star_fusion",
+  "title": "STAR-Fusion",
+  "summary": "STAR-Fusion identifies Gene Fusions in Paired-End RNASeq",
   "dxapi": "1.0.0",
   "version": "1.0.0",
   "inputSpec": [
@@ -21,40 +21,42 @@
       "class": "file",
       "optional": false,
       "patterns": [
-        "*.fastq.gz","*.fq.gz"
+          "*.fastq.gz","*.fq.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference",
+      "label": "Reference Files (tar.gz)",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+          "*.tar.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "panel",
+      "label": "RNA Panel Files (tar.gz)",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+          "*.tar.gz"
       ],
       "help": ""
     },
     {
       "name": "sampleid",
-      "label": "Output Files Prefix",
+      "label": "ReadGroup/SampleName",
       "class": "string",
       "optional": false,
       "help": ""
     }
   ],
   "outputSpec": [
-    {
-      "name": "trim1",
-      "label": "Trim Fq1",
-      "class": "file",
-      "patterns": [
-        "*"
-      ],
-      "help": ""
-    },
-    {
-      "name": "trim2",
-      "label": "Trim Fq2",
-      "class": "file",
-      "patterns": [
-        "*"
-      ],
-      "help": ""
-    },
-    {
-      "name": "trimreport",
-      "label": "Trim Output Report",
+     {
+      "name": "starfusion",
+      "label": "Star Fusion output file",
       "class": "file",
       "patterns": [
         "*"
@@ -71,7 +73,7 @@
     "interpreter": "bash",
     "release": "16.04",
     "distribution": "Ubuntu",
-    "file": "src/trim_galore.sh"
+    "file": "src/star_fusion.sh"
   },
   "access": {
     "network": [
@@ -82,7 +84,7 @@
     "aws:us-east-1": {
       "systemRequirements": {
         "*": {
-          "instanceType": "mem1_ssd1_x2"
+          "instanceType": "mem3_ssd1_v2_x8"
         }
       }
     }
